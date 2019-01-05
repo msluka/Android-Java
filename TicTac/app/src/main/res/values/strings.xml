@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Tic Tac</string>
+    <string name="lost">Lost:</string>
+</resources>
