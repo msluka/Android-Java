@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+
+    tools:context=".MainActivity">
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorWhite"
+            android:text="Page 2"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        app:rowCount="3"
+        app:columnCount="2"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/hello"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="btnTapped"
+            android:orientation="vertical"
+            app:layout_columnWeight="1"
+
+
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/human" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Hello"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thanks"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="btnTapped"
+            android:orientation="vertical"
+
+            app:layout_columnWeight="1"
+
+
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/human" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Thanks"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/spring"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="btnTapped"
+            android:orientation="vertical"
+
+            app:layout_columnWeight="1"
+
+
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/human" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Spring"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/summer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="btnTapped"
+            android:orientation="vertical"
+            app:layout_columnWeight="1"
+
+
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/human" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Summer"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/autumn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="btnTapped"
+            android:orientation="vertical"
+            app:layout_columnWeight="1"
+
+
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/human" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Autumn"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/winter"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:onClick="btnTapped"
+            android:orientation="vertical"
+            app:layout_columnWeight="1"
+
+
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/human" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Winter"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.GridLayout>
+
+
+</LinearLayout>
