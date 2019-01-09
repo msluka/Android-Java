@@ -86,7 +86,7 @@
             android:layout_weight="1"
             android:onClick="controlTimer"
             android:visibility="gone"
-            app:srcCompat="@drawable/pause" />
+            app:srcCompat="@drawable/stop" />
 
 
     </LinearLayout>

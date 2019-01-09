@@ -4,9 +4,7 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -17,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     TextView timerTextView;
     Boolean counterIsActive = false;
     CountDownTimer countDownTimer;
+    MediaPlayer mp;
+
 
     public void updateTimer(int secondLefts) {
 
@@ -41,6 +41,27 @@ public class MainActivity extends AppCompatActivity {
         timerTextView.setText(min + ":" + sec);
     }
 
+    public void resetTimer(){
+        timerTextView.setText("00:30");
+        timerSeekBar.setProgress(30);
+        countDownTimer.cancel();
+        timerSeekBar.setEnabled(true);
+        counterIsActive = false;
+
+        ImageView startBtn = findViewById(R.id.startBtn);
+        ImageView stopBtn = findViewById(R.id.stopBtn);
+
+        stopBtn.setVisibility(View.GONE);
+        startBtn.setVisibility(View.VISIBLE);
+
+        if(mp !=null){
+            mp.stop();
+            mp.reset();
+        }
+
+    }
+
+
     public void controlTimer(View view) {
 
         ImageView startBtn = findViewById(R.id.startBtn);
@@ -56,31 +77,28 @@ public class MainActivity extends AppCompatActivity {
             countDownTimer = new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
+
                     updateTimer((int) millisUntilFinished / 1000);
-                    //Log.i("timer", "s");
+
                 }
 
                 @Override
                 public void onFinish() {
+
                     timerTextView.setText("00:00");
-                    MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                    mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
                     mp.start();
+
                 }
             }.start();
 
         } else {
-            timerTextView.setText("00:30");
-            timerSeekBar.setProgress(30);
-            countDownTimer.cancel();
-            timerSeekBar.setEnabled(true);
-            counterIsActive = false;
 
-            stopBtn.setVisibility(View.GONE);
-            startBtn.setVisibility(View.VISIBLE);
+            resetTimer();
+
         }
 
     }
-
 
 
     @Override
