@@ -5,9 +5,13 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +19,11 @@ public class MainActivity extends AppCompatActivity {
     TextView timerTextView;
     Boolean counterIsActive = false;
     CountDownTimer countDownTimer;
+    CountDownTimer countDownTimer2;
     MediaPlayer mp;
+
+    Boolean minimized = false;
+    ImageView eggImageView;
 
 
     public void updateTimer(int secondLefts) {
@@ -41,10 +49,22 @@ public class MainActivity extends AppCompatActivity {
         timerTextView.setText(min + ":" + sec);
     }
 
-    public void resetTimer(){
-        timerTextView.setText("00:30");
-        timerSeekBar.setProgress(30);
-        countDownTimer.cancel();
+    public void resetTimer(int seconds){
+
+        updateTimer(seconds);
+
+        timerSeekBar.setProgress(seconds);
+
+        if(countDownTimer !=null){
+            countDownTimer.cancel();
+        }
+
+        if(countDownTimer2 !=null){
+            countDownTimer2.cancel();
+            eggImageView.animate().scaleX(1f).scaleY(1f).setDuration(1000);
+            minimized = false;
+        }
+
         timerSeekBar.setEnabled(true);
         counterIsActive = false;
 
@@ -67,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
         ImageView startBtn = findViewById(R.id.startBtn);
         ImageView stopBtn = findViewById(R.id.stopBtn);
 
+
+
         if (counterIsActive == false) {
+
+            jumpingEgg();
 
             counterIsActive = true;
             timerSeekBar.setEnabled(false);
@@ -89,14 +113,154 @@ public class MainActivity extends AppCompatActivity {
                     mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
                     mp.start();
 
+                    if(countDownTimer2 !=null){
+                        countDownTimer2.cancel();
+                        eggImageView.animate().scaleX(1f).scaleY(1f).setDuration(1000);
+                        minimized = false;
+                    }
+
                 }
             }.start();
 
         } else {
 
-            resetTimer();
+            resetTimer(120);
+
+            LinearLayout llLeft = findViewById(R.id.readyTimersLayout);
+            LinearLayout llRight = findViewById(R.id.readyTimersLayoutRight);
+
+            ArrayList llLeftChildren = getViewsByTag(llLeft, "readyTimer");
+            ArrayList llRightChildren = getViewsByTag(llRight, "readyTimer");
+
+            for (int counter = 0; counter < llLeftChildren.size(); counter++) {
+                ImageView v = (ImageView) llLeftChildren.get(counter);
+                v.setAlpha(0.5f);
+
+            }
+
+            for (int counter = 0; counter < llRightChildren.size(); counter++) {
+                ImageView v = (ImageView) llRightChildren.get(counter);
+                v.setAlpha(0.5f);
+
+            }
+
+            findViewById(R.id.soft).setAlpha(0.9f);
+
+
+
 
         }
+
+
+
+    }
+
+    public static ArrayList<View> getViewsByTag(ViewGroup root, String tag) {
+        ArrayList<View> views = new ArrayList<View>();
+        final int childCount = root.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = root.getChildAt(i);
+            if (child instanceof ViewGroup) {
+                views.addAll(getViewsByTag((ViewGroup) child, tag));
+            }
+
+            final Object tagObj = child.getTag();
+            if (tagObj != null && tagObj.equals(tag)) {
+                views.add(child);
+            }
+
+        }
+        return views;
+    }
+
+    public void setMode(View view){
+
+        if (counterIsActive == false) {
+            //get tapped layout id (integer)
+            int id = view.getId();
+            //get tapped layout id (string)
+            String ourId = view.getResources().getResourceEntryName(id);
+
+            switch (ourId) {
+                case "soft":
+                    resetTimer(120);
+                    break;
+
+                case "normal":
+                    resetTimer(210);
+                    break;
+
+                case "hard":
+                    resetTimer(240);
+                    break;
+
+                case "five":
+                    resetTimer(300);
+                    break;
+
+                case "ten":
+                    resetTimer(600);
+                    break;
+
+                case "fifteen":
+                    resetTimer(900);
+                    break;
+
+                default:
+                    resetTimer(120);
+            }
+
+
+            LinearLayout llLeft = findViewById(R.id.readyTimersLayout);
+            LinearLayout llRight = findViewById(R.id.readyTimersLayoutRight);
+
+            ArrayList llLeftChildren = getViewsByTag(llLeft, "readyTimer");
+            ArrayList llRightChildren = getViewsByTag(llRight, "readyTimer");
+
+            for (int counter = 0; counter < llLeftChildren.size(); counter++) {
+                ImageView v = (ImageView) llLeftChildren.get(counter);
+                v.setAlpha(0.5f);
+
+            }
+
+            for (int counter = 0; counter < llRightChildren.size(); counter++) {
+                ImageView v = (ImageView) llRightChildren.get(counter);
+                v.setAlpha(0.5f);
+
+            }
+
+            view.setAlpha(0.9f);
+        }
+    }
+
+    public void jumpingEgg(){
+
+        eggImageView = findViewById(R.id.eggImageView);
+
+        countDownTimer2 = new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1500) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                if(minimized == false){
+
+                    eggImageView.animate().scaleX(0.6f).scaleY(0.6f).setDuration(1500);
+                    minimized = true;
+                } else{
+                    eggImageView.animate().scaleX(1f).scaleY(1f).setDuration(1500);
+                    minimized = false;
+                }
+
+            }
+
+            @Override
+            public void onFinish() {
+
+
+
+            }
+        }.start();
+
+
 
     }
 
@@ -110,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
 
 
-        timerSeekBar.setMax(600);
-        timerSeekBar.setProgress(30);
+        timerSeekBar.setMax(900);
+        timerSeekBar.setProgress(120);
 
         timerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

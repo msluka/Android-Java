@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainView"
     tools:context=".MainActivity">
 
     <SeekBar
@@ -29,7 +30,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="00:30"
+        android:text="02:00"
         android:textColor="@color/colorAccent"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +40,7 @@
 
     <ImageView
         android:id="@+id/eggImageView"
-        android:layout_width="246dp"
+        android:layout_width="181dp"
         android:layout_height="286dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -48,10 +49,10 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/readyTimersLayoutRight"
+        app:layout_constraintStart_toEndOf="@+id/readyTimersLayout"
         app:layout_constraintTop_toBottomOf="@+id/timerTextView"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/egg" />
 
     <LinearLayout
@@ -73,16 +74,18 @@
 
         <ImageView
             android:id="@+id/startBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:onClick="controlTimer"
             app:srcCompat="@drawable/play_btn" />
 
         <ImageView
             android:id="@+id/stopBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:onClick="controlTimer"
             android:visibility="gone"
@@ -91,7 +94,135 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/readyTimersLayout"
+        android:layout_width="67dp"
+        android:layout_height="286dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="26dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerTextView">
 
+        <ImageView
+            android:id="@+id/soft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="setMode"
+            android:tag="readyTimer"
+            app:srcCompat="@drawable/active_timer" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Soft" />
+
+        <ImageView
+            android:id="@+id/normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="setMode"
+            android:tag="readyTimer"
+            app:srcCompat="@drawable/active_timer" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Normal" />
+
+        <ImageView
+            android:id="@+id/hard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="setMode"
+            android:tag="readyTimer"
+            app:srcCompat="@drawable/active_timer" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Hard" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/readyTimersLayoutRight"
+        android:layout_width="67dp"
+        android:layout_height="286dp"
+
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerTextView">
+
+        <ImageView
+            android:id="@+id/five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="setMode"
+            android:tag="readyTimer"
+            app:srcCompat="@drawable/active_timer" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="5 min" />
+
+        <ImageView
+            android:id="@+id/ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="setMode"
+            android:tag="readyTimer"
+            app:srcCompat="@drawable/active_timer" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="10 min" />
+
+        <ImageView
+            android:id="@+id/fifteen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:onClick="setMode"
+            android:tag="readyTimer"
+            app:srcCompat="@drawable/active_timer" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="15 min" />
+
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
