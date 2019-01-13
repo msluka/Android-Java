@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean gameActive = true;
+    boolean gameActive = false;
 
     Button startButton;
     ArrayList<Integer> answers = new ArrayList<Integer>();
