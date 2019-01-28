@@ -3,6 +3,8 @@ package com.msluka.maplocationdemo;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +24,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -104,10 +110,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(Location location) {
 
-               // Toast.makeText(MapsActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+               // Get address from GPS
+
+                String address = "";
+
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+                try {
+
+                    List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
+
+                    if(addressList !=null && addressList.size() > 0){
+
+                        //address = addressList.get(0).toString();
+
+                        if(addressList.get(0).getSubThoroughfare() !=null){
+                            address += addressList.get(0).getSubThoroughfare() + " ";
+                        }
+                        if(addressList.get(0).getThoroughfare() !=null){
+                            address += addressList.get(0).getThoroughfare() + ", ";
+                        }
+
+                        if(addressList.get(0).getLocality() !=null){
+                            address += addressList.get(0).getLocality() + ", ";
+                        }
+
+                        if(addressList.get(0).getLocality() !=null){
+                            address += addressList.get(0).getLocality() + ", ";
+                        }
+
+                        if(addressList.get(0).getPostalCode() !=null){
+                            address += addressList.get(0).getPostalCode() + ", ";
+                        }
+
+                        if(addressList.get(0).getCountryName() !=null){
+                            address += addressList.get(0).getCountryName() + ", ";
+                        }
 
 
-               LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                    }
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
                if(personalMarker != null){
 
@@ -118,7 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                mMap.clear();
 
                // mMap.addMarker(new MarkerOptions().position(userLocation).title("This is your current location"));
-               personalMarker = mMap.addMarker(new MarkerOptions().position(userLocation).title("This is your current location"));
+               personalMarker = mMap.addMarker(new MarkerOptions().position(userLocation).title("This is your current location: " + address));
                personalMarker.showInfoWindow();
 
                //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
