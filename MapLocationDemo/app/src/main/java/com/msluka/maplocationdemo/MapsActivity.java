@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location lastKnownLocation;
 
     Marker personalMarker;
+
+    TextView addressTV;
 
 
     public void getAndSetLastKnownLocation(){
@@ -86,6 +89,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        addressTV = findViewById(R.id.addressTextView);
+
     }
 
 
@@ -135,16 +141,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             address += addressList.get(0).getLocality() + ", ";
                         }
 
-                        if(addressList.get(0).getLocality() !=null){
-                            address += addressList.get(0).getLocality() + ", ";
-                        }
-
                         if(addressList.get(0).getPostalCode() !=null){
                             address += addressList.get(0).getPostalCode() + ", ";
                         }
 
                         if(addressList.get(0).getCountryName() !=null){
-                            address += addressList.get(0).getCountryName() + ", ";
+                            address += addressList.get(0).getCountryName();
                         }
 
 
@@ -155,6 +157,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     e.printStackTrace();
 
                 }
+
+                addressTV.setText(address);
 
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -167,7 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                mMap.clear();
 
                // mMap.addMarker(new MarkerOptions().position(userLocation).title("This is your current location"));
-               personalMarker = mMap.addMarker(new MarkerOptions().position(userLocation).title("This is your current location: " + address));
+               personalMarker = mMap.addMarker(new MarkerOptions().position(userLocation).title("This is your current location: "));
                personalMarker.showInfoWindow();
 
                //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
