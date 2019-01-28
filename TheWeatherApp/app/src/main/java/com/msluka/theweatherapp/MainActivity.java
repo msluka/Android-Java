@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 temp_max = jsonObject2.getString("temp_max");
 
                 message = "Temperature: " + temp+" \r\n" + "Pressure: " +pressure +" \r\n"
-                        +"Humidity: "+ humidity +" \r\n" + "Min.Temp: "+ temp_min +" \r\n" + "Max.Temp: "+temp_max;
+                        +"Humidity: "+ humidity +" \r\n" + "Min.temp: "+ temp_min +" \r\n" + "Max.temp: "+temp_max;
 
 
 
