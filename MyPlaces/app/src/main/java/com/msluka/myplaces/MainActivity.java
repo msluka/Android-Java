@@ -1,8 +1,11 @@
 package com.msluka.myplaces;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,8 +14,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static android.widget.Toast.makeText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<LatLng> locations = new ArrayList<LatLng>();
     static ArrayAdapter arrayAdapter;
 
+
+    ArrayList<String> latitudes = new ArrayList<>();
+    ArrayList<String> longitudes = new ArrayList<>();
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +43,69 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.listView);
 
-        //places.add("Add a new place");
+        sharedPreferences = this.getSharedPreferences("com.msluka.myplaces", Context.MODE_PRIVATE);
+
+        //sharedPreferences.edit().clear().commit();
+        //sharedPreferences.edit().remove(places.get(1)).commit();
+
+
+        places.clear();
+        latitudes.clear();
+        longitudes.clear();
+        locations.clear();
+
+        try {
+            places = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("places", ObjectSerializer.serialize(new ArrayList<String>())));
+            latitudes = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("latitudes", ObjectSerializer.serialize(new ArrayList<String>())));
+            longitudes = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("longitudes", ObjectSerializer.serialize(new ArrayList<String>())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(places.size() > 0 && latitudes.size() >0 && longitudes.size()>0){
+
+            if(places.size() == latitudes.size()  && latitudes.size() == longitudes.size()){
+
+                for(int i=0; i < latitudes.size(); i++){
+
+                    locations.add(new LatLng(Double.parseDouble(latitudes.get(i)), Double.parseDouble(longitudes.get(i))));
+                }
+
+            }
+        }
+
+
+        if(places.size()==0){
+
+            places.add("Add a new place");
+
+        }
+
 
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, places);
 
+
+
         listView.setAdapter(arrayAdapter);
+
+
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+
+                if(pos > 0){
+                    removeMyPlace(pos);
+
+                    //arrayAdapter.remove(arrayAdapter.getItem(pos));
+                    arrayAdapter.notifyDataSetChanged();
+
+                }
+
+                return true;
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,6 +123,34 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+    }
+
+    public void removeMyPlace(int position){
+
+
+        try {
+
+            //ArrayList<String> latitudes = new ArrayList<>();
+            //ArrayList<String> longitudes = new ArrayList<>();
+            latitudes.remove(position);
+            longitudes.remove(position);
+            places.remove(position);
+
+            sharedPreferences.edit().putString("places", ObjectSerializer.serialize(MainActivity.places)).apply();
+            sharedPreferences.edit().putString("latitudes", ObjectSerializer.serialize(latitudes)).apply();
+            sharedPreferences.edit().putString("longitudes", ObjectSerializer.serialize(longitudes)).apply();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 }
