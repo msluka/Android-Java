@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
             //myDatabase.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR, age INT(3))");
             //myDatabase.execSQL("INSERT INTO users (name, age) VALUES('LUKA', 37)");
 
+            myDatabase.execSQL("DELETE FROM users WHERE name = 'LUKA'");
+
             Cursor c = myDatabase.rawQuery("SELECT * FROM users", null);
             int nameIndex = c.getColumnIndex("name");
             int ageIndex = c.getColumnIndex("age");
