@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
        // webView.loadUrl("https://rexxer.nazwa.pl/aukcje/export9102.html");
-        webView.loadUrl("https://s.codepen.io/shotas/debug/ZPpXXo/LDAmdPKNOgnr");
+        //webView.loadUrl("https://s.codepen.io/shotas/debug/ZPpXXo/LDAmdPKNOgnr");
+        webView.loadData("<html><h1>This is H1 tag </h1><p>This is P tag</p></html>", "text/html", "UTF-8");
 
 
     }
